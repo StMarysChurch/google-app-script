@@ -1,3 +1,9 @@
+// function onOpen() {
+//    var menu = SpreadsheetApp.getUi().createMenu("🆕 Update Data");
+//    menu.addItem("Update Data", "updateMMVSRegisteration");
+//    menu.addToUi();
+// }
+
 function updateMMVSRegisteration() {
   const EVENTBRITE_API_KEY = "D74CNALISZE5UJQNX3V5";
   const EVENT_ID = 618319549417;
@@ -82,7 +88,7 @@ function updateMMVSRegisteration() {
       attendees.attendees.forEach(element => {
         var date = new Date(element.created);
         attendee.push([
-          `${date.getFullYear()}/${date.getMonth()}/${date.getDate()}`, element.profile.name, element.answers[0].answer, element.profile.email
+          `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`, element.profile.name, element.answers[0].answer, element.profile.email
         ]);
         if (parishes.has(element.answers[0].answer)) {
           parishes.set(element.answers[0].answer, parishes.get(element.answers[0].answer) + 1);
@@ -99,13 +105,13 @@ function updateMMVSRegisteration() {
       page++;
     }
     const parishesSorted = [...parishes].sort((a, b) => b[1] - a[1]);
-    const church1 = [...attendee].filter(e => e[2]=="St. Gregorios Orthodox Church (Professional Court)");
-    const church2 = [...attendee].filter(e => e[2]=="St. Thomas Orthodox Church (Toronto)");
-    const church3 = [...attendee].filter(e => e[2]=="St. Mary's Orthodox Syrian Church (Ajax)");
-    const church4 = [...attendee].filter(e => e[2]=="St. Gregorios Indian Orthodox Church (Lakeview)");
-    const church5 = [...attendee].filter(e => e[2]=="St. Thomas Orthodox Church (Ottawa)");
-    const church6 = [...attendee].filter(e => e[2]=="St. John’s Orthodox Church (Hamilton)");
-    const church7 = [...attendee].filter(e => e[2]=="St. George Indian Orthodox Church (London)");
+    const church1 = [...attendee].filter(e => e[2] == "St. Gregorios Orthodox Church (Professional Court)");
+    const church2 = [...attendee].filter(e => e[2] == "St. Thomas Orthodox Church (Toronto)");
+    const church3 = [...attendee].filter(e => e[2] == "St. Mary's Orthodox Syrian Church (Ajax)");
+    const church4 = [...attendee].filter(e => e[2] == "St. Gregorios Indian Orthodox Church (Lakeview)");
+    const church5 = [...attendee].filter(e => e[2] == "St. Thomas Orthodox Church (Ottawa)");
+    const church6 = [...attendee].filter(e => e[2] == "St. John’s Orthodox Church (Hamilton)");
+    const church7 = [...attendee].filter(e => e[2] == "St. George Indian Orthodox Church (London)");
 
     // console.log(church1);
     updateSats(SHEET_ID, PARISH_SHEET_RANGE, 'USER_ENTERED', parishesSorted);
